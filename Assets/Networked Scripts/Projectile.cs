@@ -1,20 +1,36 @@
-﻿namespace UNET_Multiplayer.Assets.Networked_Scripts
-{	
-	using UnityEngine;	
+﻿using UnityEngine;
 
-	public class Projectile : MonoBehaviour
+namespace UNET_Multiplayer.Assets.Networked_Scripts
+{
+	public class Projectile : MonoBehaviour 
 	{	
 		public float lifeTime;
-
 		void OnCollisionEnter(Collision other)
 		{
 			if (other.gameObject.CompareTag ("Target"))
 			{
-				Debug.Log("Ball will be Destroyed After Hitting target");						
-				Destroy(gameObject);
+				Destroy();
 			}
-			Destroy(gameObject,lifeTime);											
+
+			if (other.gameObject.CompareTag ("Border"))
+			{
+				Destroy();
+			}
+
+			if (other.gameObject.CompareTag ("Projectile"))
+			{
+				Destroy();
+			}
+
+			// Destroy(gameObject,lifeTime);															
+		}
+
+		void Destroy()
+		{
+			gameObject.SetActive(false);	
 		}	
-		
+	
 	}
 }
+
+

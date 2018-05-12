@@ -1,10 +1,12 @@
-﻿namespace UNET_Multiplayer.Assets.Networked_Scripts
-{
-  	using UnityEngine;
-	using UnityEngine.Networking;
-	public class PlayerController : MonoBehaviour {
+﻿using UnityEngine;
+using UnityEngine.Networking;
 
-	#region Variables
+namespace UNET_Multiplayer.Assets.Networked_Scripts
+{
+	public class PlayerController : MonoBehaviour 
+	{
+		
+		#region Variables
 
 		public GameObject Ball;
 		public bool is_hit=false;  
@@ -12,11 +14,13 @@
 		public bool isReady = false;   
 		public Rigidbody rb;
 		public float JumpPower;
-		public Transform shooter;	
+		public Transform shooter;
+		
 
 		private float Stuntime=0.5f;
-		private Vector3 StunHeight; 
-		private float stunHeight;
+		private Vector3 StunHeight;
+        private ObjectPooler objectPooler;
+        private float stunHeight;
 
 		#endregion
 
@@ -24,6 +28,7 @@
 
 		void Start()
 		{
+			objectPooler = ObjectPooler.Instance;
 			stunHeight = 2f;
 			StunHeight = new Vector3(transform.position.x, stunHeight, transform.position.z);
 		}
@@ -58,9 +63,10 @@
 
 			if (other.gameObject.CompareTag ("Projectile")) 
 			{
-				Destroy(other.gameObject);
+				other.gameObject.SetActive(false);
 				Is_Hit ();
 				Stun();
+				Is_NotGround();
 				Invoke("UnStun",Stuntime);  
 			}       
 		}
@@ -85,11 +91,14 @@
 
 		public void Fire(Vector3 obj,float Power)
 		{
-			GameObject ball = Instantiate(Ball,shooter.position,Quaternion.identity) as GameObject;
-			ball.GetComponent<Rigidbody>().velocity = (obj -shooter.position).normalized * Power;
+			// GameObject ball = Instantiate(Ball,shooter.position,Quaternion.identity) as GameObject;
+			var ball = objectPooler.SpawnFromPool("Projectile",shooter.position,Quaternion.identity);
+			ball.GetComponent<Rigidbody>().velocity = (obj -shooter.position).normalized * Power;		
 		}
 
-	#endregion
+		#endregion
 
 	}
+
+
 }
