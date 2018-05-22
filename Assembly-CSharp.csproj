@@ -60,6 +60,7 @@
      <Compile Include="Assets\Networked Scripts\player.cs" />
      <Compile Include="Assets\Networked Scripts\PlayerController.cs" />
      <Compile Include="Assets\Networked Scripts\Projectile.cs" />
+     <Compile Include="Assets\Networked Scripts\ScoreManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
