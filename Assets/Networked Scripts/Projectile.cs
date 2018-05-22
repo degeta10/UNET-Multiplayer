@@ -2,8 +2,6 @@
 
 namespace UNET_Multiplayer.Assets.Networked_Scripts {
 	public class Projectile : MonoBehaviour {
-		public float lifeTime;
-
 		private ScoreManager scoreManager;
 
 		public void Start () {
